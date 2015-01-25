@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Mô tả Schema.sql - My Docs</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> My Docs</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../debai">Đề bài</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../phuongphap">Phương pháp</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../thietkecosodulieu">Thiết kế cơ sỏ dữ liệu</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 current">
+                <a class="current" href=".">Mô tả Schema.sql</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../ketluan">Kết luận</a>
+            </li>
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href=".."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    <li>Mô tả Schema.sql</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="create-table">Create Table</h1>
+<pre><code>
+CREATE TABLE tbl_Category (
+  category_id serial NOT NULL PRIMARY KEY,
+  parent integer NOT NULL,
+  name character varying(255)
+
+);
+
+
+CREATE TABLE tbl_Product_type (
+  product_type_id serial NOT NULL PRIMARY KEY,
+  name character varying(255) NOT NULL
+);
+
+
+
+CREATE TABLE tbl_Products (
+  product_id bigserial NOT NULL PRIMARY KEY,
+  product_type_id integer REFERENCES tbl_Product_type(product_type_id) NOT NULL,
+  category_id integer REFERENCES tbl_Category(category_id) NOT NULL,
+  product_name character varying(255) NOT NULL,
+  stock integer NOT NULL,
+  jsonb character varying (255)
+);
+
+
+
+CREATE TABLE tbl_Attributes (
+  attribute_id serial NOT NULL PRIMARY KEY,
+  name character varying(255) NOT NULL,
+  alias character varying(255) NOT NULL,
+  type integer
+);
+
+
+CREATE TABLE tbl_Attribute_value(
+  attribute_value_id serial NOT NULL PRIMARY KEY,
+  attribute_id integer REFERENCES tbl_Attributes(attribute_id),
+  value text
+
+);
+
+
+CREATE TABLE tbl_Products_attribute_value (
+  product_id integer REFERENCES tbl_Products(product_id) NOT NULL,
+  attribute_id integer REFERENCES tbl_Attributes(attribute_id) NOT NULL,
+  attribute_value_id integer REFERENCES tbl_Attribute_value(attribute_value_id),
+  value character varying(255),
+  PRIMARY KEY(product_id, attribute_id)
+);
+
+
+CREATE TABLE tbl_Product_type_attribute (
+product_type_id integer REFERENCES tbl_Product_type(product_type_id) NOT NULL,
+attribute_id integer REFERENCES tbl_Attributes(attribute_id) NOT NULL
+);
+</code></pre>
+
+<h1 id="chen-du-lieu">Chèn dữ liệu</h1>
+<pre><code>INSERT INTO tbl_Category (parent, name) VALUES (0,'Điện thoại'); --1(category_id)
+INSERT INTO tbl_Category (parent, name) VALUES (0,'Máy tính bảng'); --2
+INSERT INTO tbl_Category (parent, name) VALUES (0,'Âm thanh'); --3
+INSERT INTO tbl_Category (parent, name) VALUES (0,'Phụ kiện'); --4
+INSERT INTO tbl_Category (parent, name) VALUES (0,'Sản phẩm khác'); --5
+
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Hãng sản xuất','Hãng sản xuất điện thoại di động'); --1(attribute_id)
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Hệ điều hành', 'OS điện thoại di động'); --2
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Màu sắc', 'Màu điện thoại di động'); --3
+INSERT INTO tbl_Attributes (name, alias) VALUES (' Màn hình cảm ứng','Cảm ứng điện thoại di động' ); --4
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Thẻ nhớ', 'Thẻ nhớ cho điện thoại di động');       --5
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Wifi', 'Wifi cho điện thoại đi động');             --6
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Camera', 'Camera cho điện thoại di động');         --7
+INSERT INTO tbl_Attributes (name, alias) VALUES ('3G', '3G cho di động'); --8
+INSERT INTO tbl_Attributes (name, alias) VALUES ('4G', '4G cho di động'); --9
+INSERT INTO tbl_Attributes (name, alias) VALUES ('FM', 'FM cho di động'); --10
+INSERT INTO tbl_Attributes (name, alias) VALUES ('GPS', 'GPS cho di động'); --11
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Chông bụi, chống nước' , ' Chống bụi nước cho di động'); --12
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Hỗ trợ bút cảm ứng', 'BÚt cảm ứng cho di động'); --13
+INSERT INTO tbl_Attributes (name, alias) VALUES ('2 Sim', '2 sim cho di động'); --14
+INSERT INTO tbl_Attributes (name, alias) VALUES ('Bluetooh', 'Bluetooth cho tai nghe'); --15
+
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (1, 'Nokia'); --1(attribute_value_id)
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (1, 'SamSung'); --2
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (1, 'HTC'); --3
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (1, 'Sony'); --4
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (1, 'Apple'); --5
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (2, 'Android'); --6
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (2, 'IOS'); --7 
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (2, 'Window Phone'); --8
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (3, 'Đỏ');--9
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (3, 'Xanh');--10
+INSERT INTO tbl_Attribute_value (attribute_id, value) VALUES (3, 'Tím');--11
+
+
+
+INSERT INTO tbl_Product_type (name) VALUES ('Điện thoại di động');--1(product_type_id)
+INSERT INTO tbl_Product_type (name) VALUES ('Máy tính bảng');--2
+INSERT INTO tbl_Product_type (name) VALUES ('Loa di động');--3
+INSERT INTO tbl_Product_type (name) VALUES ('Dàn Hifi-mini &amp; SoundBars');--4
+INSERT INTO tbl_Product_type (name) VALUES ('Tai nghe');--5
+INSERT INTO tbl_Product_type (name) VALUES ('HeadAMP &amp; DAC');--6
+INSERT INTO tbl_Product_type (name) VALUES ('Máy nghe nhạc, ghi âm');--7
+INSERT INTO tbl_Product_type (name) VALUES ('Cable âm thanh');--8
+INSERT INTO tbl_Product_type (name) VALUES ('Bao da');--9
+INSERT INTO tbl_Product_type (name) VALUES ('Ốp lưng');--10
+INSERT INTO tbl_Product_type (name) VALUES ('Pin');--11
+INSERT INTO tbl_Product_type (name) VALUES ('Pin dự phòng ');--12
+INSERT INTO tbl_Product_type (name) VALUES ('Phụ kiện MacBook');--13
+INSERT INTO tbl_Product_type (name) VALUES ('Sạc, đế sạc');--14
+INSERT INTO tbl_Product_type (name) VALUES ('Sạc xe hơi');--15
+INSERT INTO tbl_Product_type (name) VALUES ('Data Cable');--16
+INSERT INTO tbl_Product_type (name) VALUES ('Miếng dán màn hình');--17
+INSERT INTO tbl_Product_type (name) VALUES ('Phụ kiện xe hơi');--18
+INSERT INTO tbl_Product_type (name) VALUES ('Phụ kiện khác');--19
+INSERT INTO tbl_Product_type (name) VALUES ('Máy ảnh');--20
+INSERT INTO tbl_Product_type (name) VALUES ('Máy quay');--21
+INSERT INTO tbl_Product_type (name) VALUES ('Máy tính Apple');--22
+INSERT INTO tbl_Product_type (name) VALUES ('Thiết bị lưu trữ');--23
+INSERT INTO tbl_Product_type (name) VALUES ('Đồng hồ thông minh');--24
+INSERT INTO tbl_Product_type (name) VALUES ('Thiết bị, đồ chơi ');--25
+INSERT INTO tbl_Product_type (name) VALUES ('Dụng cụ đa năng');--26
+INSERT INTO tbl_Product_type (name) VALUES ('Đèn pin cao ');--27
+INSERT INTO tbl_Product_type (name) VALUES ('Thiết bị khác');--28
+INSERT INTO tbl_Product_type (name) VALUES ('Hàng độc');--29
+
+
+INSERT INTO tbl_Product_type_attribute VALUES (1,1); 
+INSERT INTO tbl_Product_type_attribute VALUES (1,2);
+INSERT INTO tbl_Product_type_attribute VALUES (1,3);
+INSERT INTO tbl_Product_type_attribute VALUES (12,1);
+INSERT INTO tbl_Product_type_attribute VALUES (12,3);
+
+
+INSERT INTO tbl_Products (product_type_id, category_id, product_name, stock, price) VALUES (1,1,'Nokia Lumia 930',10,9990000); --1(product_id)
+INSERT INTO tbl_Products (product_type_id, category_id, product_name, stock, price) VALUES (1,1,'HTC Desire Eye',20,12490000); --2
+INSERT INTO tbl_Products (product_type_id, category_id, product_name, stock, price) VALUES (2,2,'Samsung Galaxy Tab 4 7.0 T231',10,4990000); --3
+INSERT INTO tbl_Products (product_type_id, category_id, product_name, stock, price) VALUES (2,2,'Apple Ipad mini 3 Wifi 16GB',10,9990000); --4
+INSERT INTO tbl_Products (product_type_id, category_id, product_name, stock, price) VALUES (5,3,'TAI NGHE GAVIO DYNA G CHORD CLEF',10,9990000); --5
+INSERT INTO tbl_Products (product_type_id, category_id, product_name, stock, price) VALUES (12,4,'PIN DỰ PHÒNG MILI POWER NOVA I 5000 MAH HB-T05-L',10,9990000); --6
+INSERT INTO tbl_Products (product_type_id, category_id, product_name, stock, price) VALUES (24,5,'ASUS ZENWATCH',10,9990000); --7
+
+-- Sản phẩm 1 : Nokia Lumia 930
+
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (1,1,1,''); -- hãng
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (1,2,8,''); -- os
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (1,3,9,''); -- màu
+
+-- Sản phẩm 2 : HTC Desire Eye
+
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (2,1,3,'');
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (2,2,6,'');
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (2,3,10,'');
+
+-- Sản phẩm 3 : pin dự phòng
+
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (6,1,1,''); -- hãng
+INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_value_id, value) VALUES (6,3,10,''); -- mau
+</code></pre>
+
+<h1 id="anh">Ảnh</h1>
+<h2 id="category">category</h2>
+<p><img alt="Smaller icon" src="../img/category.png" /></p>
+<h2 id="attribute">attribute</h2>
+<p><img alt="Smaller icon" src="../img/attribute.png" /></p>
+<h2 id="attribute_value">Attribute_value</h2>
+<p><img alt="Smaller icon" src="../img/attribute_value.png" /></p>
+<h2 id="product_type">Product_type</h2>
+<p><img alt="Smaller icon" src="../img/product_type.png" /></p>
+<h2 id="products">Products</h2>
+<p><img alt="Smaller icon" src="../img/products.png" /></p>
+<h2 id="product_attribute_value">Product_attribute_value</h2>
+<p><img alt="Smaller icon" src="../img/product_attribute_value.png" /></p>
+<h2 id="product_type_attribute">Product_type_attribute</h2>
+<p><img alt="Smaller icon" src="../img/product_type_attribute.png" />,</p>
+<h1 id="query-data">Query data</h1>
+<pre><code>SELECT
+p.*,
+pt.name AS product_type_name  FROM tbl_Products AS p,
+tbl_Product_type AS pt WHERE p.product_type_id = pt.product_type_id;
+
+</code></pre>
+
+<p><img alt="Smaller icon" src="../img/querrydata.jpg" />,</p>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../ketluan" class="btn btn-neutral float-right" title="Kết luận"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../thietkecosodulieu" class="btn btn-neutral" title="Thiết kế cơ sỏ dữ liệu"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+      <span><a href="../thietkecosodulieu" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../ketluan" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

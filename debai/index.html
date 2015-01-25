@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Đề bài - My Docs</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> My Docs</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+            <li class="toctree-l1 current">
+                <a class="current" href=".">Đề bài</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../phuongphap">Phương pháp</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../thietkecosodulieu">Thiết kế cơ sỏ dữ liệu</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../motatschema">Mô tả Schema.sql</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../ketluan">Kết luận</a>
+            </li>
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href=".."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    <li>Đề bài</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h3 id="e-bai-code-camp">Đề bài Code Camp</h3>
+<hr />
+<p>Hãy thiết kế CSDL quan hệ trên Postgresql để mô hình hoá đủ các thông tin cần thiết để xây dựng web site, web service cung cấp thông tin dạng REST cho ứng dụng di động hiển thị:</p>
+<ol>
+<li>
+<p>Danh mục phân loại chủng loại hàng chung: [Quần áo – thời trang, Đồ chơi, Thực phẩm – đồ uống, Đồ gia dụng, Điện tử gia dụng, Di động – tablet, Máy tính – linh kiện – mạng]</p>
+</li>
+<li>
+<p>Danh mục phân loại chủng loại hàng chi tiết: [Quần áo – thời trang: Nam, Nữ, Trẻ con], [Đồ chơi: bé trai, gái, thiếu nhi], [Thực phẩm – đồ uống: ….]….</p>
+</li>
+<li>
+<p>Do có nhiều mặt hàng cùng một loại, có nhiều tính chất chung nhau như:
+Tivi các hãng sẽ có thuộc tính: [công nghệ: LED, Plasma, OLED], [màn hình: phẳng, cong], [smart: có kết nối Internet, không], [cổng giao tiếp: HDMI, USB, DNA, Bluetooth, Ethernet, Wifi] Xe máy sẽ có thuộc tính: [loại động cơ: 4 thì, 2 thì], [chuyển động: ga, số, côn tay], [dung tích: xy lanh], [màu sơn: …],….</p>
+</li>
+</ol>
+<p>Tất cả các mặt hàng đều có một số thuộc tính chung: Tên, mã SKU (mã để quản lý trong kho: Stock Keeping Unit, phải là duy nhất để gán mã vạch), mô tả chi tiết, nhà sản xuất, công ty phân phối, ngày sản xuất, thời gian bảo hành, hạn sử dụng, giá gốc nhập, giá bán hiện tại, bảo hành ~ hạn sử dụng.</p>
+<p>Cần thiết kế hệ thống bảng để lưu được thông tin chung của mặt hàng và các thông tin đặc thù từng loại mặt hàng.
+Các hàng cùng loại có thể so sánh được với nhau. Ví dụ khách hàng muốn so sánh xe Airblade 2014 với Exciter 150.</p>
+<p>Cùng loại mặt hàng rõ ràng, nhưng khác một tính chất như màu sắc thì khác giá tiền. Lúc này phải tách ra thành các mã SKU độc lập. Ví dụ iPhone 6 có dung lượng khác nhau: 16G, 32G, 64G. Hoặc Exciter 150 có các màu sơn, tem khác nhau…</p>
+<ol>
+<li>
+<p>Nhà sản xuất (khác với nhà phân phối): Honda, Yamaha, Nike, Adidas, Apple, Microsoft, Sony, LG, Samsung….
+Nên thiết kế một bảng riêng.
+Ở mỗi phân loại chủng loại hàng chung, thường có danh mục các hãng sản xuất phù hợp. Ví dụ: mục quần áo – thời trang nên có Nike, Adidas, Northface… nhưng có thể không có Apple, Microsoft, Sony, LG, Samsung.</p>
+</li>
+<li>
+<p>Ứng dụng có một text box để search. Trong scope của code camp này, giả sử người dùng chỉ tìm kiếm theo tên sản phẩm. Thực tế người dùng sẽ gõ từ khoá tìm kiếm phức tạp dị hơn nhiều. Do đó không thể xài SQL query để truy vấn được đâu.</p>
+</li>
+</ol>
+<h3 id="mot-so-luu-y">Một số lưu ý</h3>
+<ol>
+<li>Không phải thuộc tính nào (column) cũng phải có. Sẽ có nhiều thuộc tính là null.</li>
+<li>Phải thiết kế hệ thống bảng – quan hệ đủ mềm dẻo để việc bảo trì, chỉnh sửa cấu trúc bảng là thấp nhất. Trong Postgresql 9.4 có kiểu dữ liệu JSONB giúp record có thể lưu động các loại thông tin không cần tuân thủ cấu trúc cột (column) cổ điển.</li>
+<li>Do đề tài codecamp phức tạp, nên hai học viên sẽ cùng làm một bài. Techmaster sẽ cử một lập trình CSDL để trả lời các câu hỏi của các bạn qua chat.</li>
+<li>Tham khảo tuyển tập các loại Database schema cho nhiều ngành ở đây http://www.databaseanswers.org/data_models/</li>
+<li>Nên bắt đầu làm càng sớm tốt. Làm trước 1-2 ngày sẽ không kịp đâu.</li>
+<li>Lịch code camp ngày 25/1/2015 tại số 14 ngõ 4, Nguyễn Đình Chiểu. Thực hành ở phòng lab tầng 1 và tầng 4. Đủ chỗ cho anh em.</li>
+</ol>
+<h3 id="goi-y-cac-buoc-lam">Gợi ý các bước làm</h3>
+<ol>
+<li>Thu thập tập dữ liệu mẫu từ các web site thương mại điện tử nổi tiếng để học hỏi họ tổ chức thông tin như thế nào?</li>
+<li>Vẽ khối lương các bảng đừng quan tâm các trường (cột) chi tiết vội. Chỉ cần xác định được khoá chính (primary key) là ok rồi.</li>
+<li>Hình dung quan hệ phù hợp giữa các bảng: 1-1, kế thừa, một – nhiều, nhiều – nhiều.</li>
+<li>Cùng bàn bạc với đồng đội sẽ có chỗ nào chưa ổn.</li>
+<li>Tạo bảng trên Postgresql viết ra một file schema.sql để còn nộp bài. Mỗi lần sửa thì sửa trên schema.sql sau đó lưu lại. Nhớ DROP TABLE trước CREATE TABLE</li>
+<li>Tạo dữ liệu mẫu, viết vào một file data.sql. Nên tạo nhiều record đa dạng để sớm phát hiện sai sót, bất cập trong thiết kể bảng. Nhớ nguyên tắc Fail Fast khi làm sản phẩm không các men.</li>
+<li>Đặt nhiều câu hỏi dạng : What – If, nếu – thì để xem cấu trúc CSDL có bền không. Chỉnh lại schema.sql và data.sql cho đến khi các dữ liệu – quan hệ phù hợp.</li>
+<li>Viết báo cáo bằng MkDocs</li>
+</ol>
+<hr />
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../phuongphap" class="btn btn-neutral float-right" title="Phương pháp"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+      <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../phuongphap" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>
