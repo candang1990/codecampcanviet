@@ -281,14 +281,56 @@ INSERT INTO tbl_Products_attribute_value (product_id, attribute_id, attribute_va
 <h2 id="product_type_attribute">Product_type_attribute</h2>
 <p><img alt="Smaller icon" src="../img/product_type_attribute.png" />,</p>
 <h1 id="query-data">Query data</h1>
-<pre><code>SELECT
-p.*,
-pt.name AS product_type_name  FROM tbl_Products AS p,
-tbl_Product_type AS pt WHERE p.product_type_id = pt.product_type_id;
+<pre><code>Truy vấn tên sản phẩm theo mã : 
+SELECT product_id AS ID, product_name AS Name
+FROM tbl_Products AS p
+WHERE p.product_id = 1;
 
 </code></pre>
 
-<p><img alt="Smaller icon" src="../img/querrydata.jpg" />,</p>
+
+
+
+<p><img alt="Smaller icon" src="../img/querry1.jpg" />,</p>c
+
+
+<pre><code>Truy vấn các đặc tính của một sản phẩm : 
+SELECT pav.attribute_id, av.value
+FROM  
+      tbl_Attributes AS a,
+      tbl_Attribute_value AS av,
+      tbl_Products_attribute_value AS pav,
+      tbl_Product_type_attribute AS pta
+WHERE
+      pav.product_id = 1 AND
+      pav.attribute_id = a.attribute_id AND
+      pav.attribute_value_id = av.attribute_value_id AND
+      pta.attribute_id = a.attribute_id AND
+      pta.product_type_id = 1;
+</code></pre>
+
+
+
+
+<p><img alt="Smaller icon" src="../img/querry2.jpg" />,</p>
+
+
+<pre><code>Truy vấn các sản phẩm có trong một Category : 
+SELECT c.name AS CategoryName, p.product_name AS NameProduct, pt.name AS TypeProduct
+FROM 
+    tbl_Products AS p,
+    tbl_Category AS c,
+    tbl_Product_type AS pt
+WHERE p.category_id = c.category_id AND
+      p.category_id = 1 AND
+      pt.product_type_id = p.product_type_id ;
+</code></pre>
+
+
+
+
+<p><img alt="Smaller icon" src="../img/querry3.jpg" />,</p>
+
 
             </div>
           </div>
